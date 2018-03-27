@@ -16,6 +16,9 @@
 <div id="div_g" style="width:1200px; height:600px;"></div>
 <script type="text/javascript">
 $(document).ready(function () {
+      // set up SPI
+SPI1.setup({mosi:D1, miso:D31, sck:D30});
+
       var data = [];
       var rec_flag = false;
       var start_time;
@@ -35,15 +38,15 @@ $(document).ready(function () {
                             showRoller: true,
                             digitsAfterDecimal: 3,
                             dateWindow: [date_win_min, date_win_max],
-                            // valueRange: [980, 1020],
-                            labels: ['Time', 'Pressure'],
+                            // valueRange: [0, 3.3],
+                            labels: ['Time', 'Voltage'],
                             showRangeSelector: true
                           });
       
        function onLine(v) {
             if(rec_flag) {
                         var x = new Date();  // current time 
-                        var y = parseFloat(v);
+                        var y = analogRead(D31);
                         if ( x.getTime() >= date_win_max) {
                                     date_win_min += taxis_increment;
                                      date_win_max += taxis_increment;
